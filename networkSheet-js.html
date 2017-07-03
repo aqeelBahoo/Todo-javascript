@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+
+    <style>
+    .hide{
+        display : none;
+    }
+</style>
+
+</head>
+<body class="container"><br>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="cellNo">Cell number</label>
+            <input type="number" class="form-control" id="cellNo" placeholder="CELL NUMBER">
+        </div>
+        <div class="form-group">
+            <label for="rs">Rupees</label>
+            <input type="number" class="form-control" id="rs" placeholder="RUPEES">
+        </div>
+        <button type="button" class="btn btn-default" id="submit">Submit</button>
+        <div class="form-group">
+            <label for="searchField">Search number</label>
+            <input type="number" class="form-control" id="searchField" placeholder="search number">
+        </div>
+        <button type="button" class="btn btn-default" id="searchBtn">Search</button>
+        <button type="button" class="btn btn-default" id="clearBtn">Clear</button>
+
+    </form><br>
+
+    <select id="network">
+        <option value="network">Network</option>
+        <option value="telenor">Telenor</option>
+        <option value="jazz">Jazz</option>
+        <option value="warid">Warid</option>
+        <option value="zong">Zong</option>
+        <option value="ufone">Ufone</option>
+    </select>
+<button type="button" class="btn btn-default" id="netWrksearchBtn">Search</button>
+
+    <br><br>
+
+    <table class="table table-striped">
+      <thead>
+       <tr class="info">
+        <th>Cell number</th>
+        <th>Rupees</th>
+        <th>Time</th>
+        <th></th>
+       </tr>
+      </thead>
+      <tbody id="tbody">
+
+      </tbody>
+    </table>
+
+
+
+
+</body>
+
+<script>
+var submit = document.getElementById("submit");
+var cellNo = document.getElementById("cellNo");
+var rs = document.getElementById("rs");
+var searchBtn = document.getElementById("searchBtn");
+var tbody =document.getElementById("tbody");
+var clearBtn = document.getElementById("clearBtn");
+var netWrksearchBtn = document.getElementById("netWrksearchBtn");
+var network = document.getElementById("network");
+
+function createTd(name,rs){
+    var tr = document.createElement("tr");
+    tr.classList.add("success")
+    var td1 = document.createElement("td");
+    var td2 = document.createElement("td");
+    var td3 = document.createElement("td");
+    td3.innerHTML = new Date();
+    var td4 = document.createElement("td");
+    var clearBatch = document.createElement("span");
+    clearBatch.classList.add("glyphicon", "glyphicon-remove-sign");
+    td4.appendChild(clearBatch);
+
+    td1.innerHTML = name;
+    td2.innerHTML = rs;
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    tr.appendChild(td4);
+    tbody.appendChild(tr);
+}
+        //submit function
+    submit.addEventListener("click",function(){
+        if(!(cellNo.value && rs.value)){
+            alert("plz fill the value");
+        }
+        else if(cellNo.value && rs.value) {
+            createTd(cellNo.value, rs.value);
+            cellNo.value = "";
+            rs.value = "";
+        }
+    })
+
+        //search function
+    searchBtn.addEventListener("click",function(){
+        if(!searchField.value.trim()){
+            alert("please write number")
+        }
+        else if(searchField.value){
+            for(var i=0; i< tbody.children.length;i++){
+                if(searchField.value.trim() == tbody.children[i].firstChild.innerText){
+                    tbody.children[i].firstChild.classList.remove("hide");
+                }
+                else {
+                    tbody.children[i].classList.add("hide");
+                }
+            }
+        }
+    })
+
+        //clear button function
+    clearBtn.addEventListener("click",function(){
+        for(var i=0; i< tbody.children.length; i++){
+            tbody.children[i].classList.remove("hide");
+        }
+    })
+        //remove function
+    tbody.addEventListener("click", function(event){
+        if(event.target.tagName == "SPAN")
+        event.target.parentElement.parentElement.remove()
+    })
+
+        //Network Search Button
+    netWrksearchBtn.addEventListener("click", function(){
+        for(var i=0; i< tbody.children.length; i++){
+            if(network.value == "network"){
+                tbody.children[i].classList.remove("hide");
+                alert("please select the network");
+                break;
+            }
+            else  if(network.value == "telenor"){
+                console.log(tbody.children[i].firstChild.innerText)
+                if(tbody.children[i].firstChild.innerHTML.slice(0,4) == "0341" ||
+                        tbody.children[i].firstChild.innerHTML.slice(0,4) == "0342" ||
+                        tbody.children[i].firstChild.innerHTML.slice(0,4) == "0343" ||
+                        tbody.children[i].firstChild.innerHTML.slice(0,4) == "0344" ||
+                        tbody.children[i].firstChild.innerHTML.slice(0,4) == "0345" ||
+                        tbody.children[i].firstChild.innerHTML.slice(0,4) == "0346" ||
+                        tbody.children[i].firstChild.innerHTML.slice(0,4) == "0347" ){
+                   tbody.children[i].classList.remove("hide");
+                }
+                else {
+                    console.log("second" + tbody.children[i].classList.add("hide"));
+                }
+            }
+            else if(network.value == "jazz"){
+                if(tbody.children[i].firstChild.innerText.slice(0,4) == "0300" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0301" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0302" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0303" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0304" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0305" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0306" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0307" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0308" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0309" ){
+                    tbody.children[i].classList.remove("hide");
+                }
+                else {
+                    tbody.children[i].classList.add("hide");
+                }
+            }
+            else if(network.value == "warid"){
+                if(tbody.children[i].firstChild.innerText.slice(0,4) == "0321" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0322" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0323" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0324" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0325" ){
+                    tbody.children[i].classList.remove("hide");
+                }
+                else {
+                    tbody.children[i].classList.add("hide");
+                }
+            }
+            else if(network.value == "ufone"){
+                if(tbody.children[i].firstChild.innerText.slice(0,4) == "0331" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0332" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0333" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0334" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0335" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0336" ){
+                    tbody.children[i].classList.remove("hide");
+                }
+                else {
+                    tbody.children[i].classList.add("hide");
+                }
+            }
+            else if(network.value == "zong"){
+                if(tbody.children[i].firstChild.innerText.slice(0,4) == "0311" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0312" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0313" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0314" ||
+                        tbody.children[i].firstChild.innerText.slice(0,4) == "0315" ){
+                    tbody.children[i].classList.remove("hide");
+                }
+                else {
+                    tbody.children[i].classList.add("hide");
+                }
+            }
+        }
+    })
+
+</script>
+
+</html>
